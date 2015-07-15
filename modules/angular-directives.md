@@ -7,7 +7,7 @@
 "freshnessDate" : 2015-04-17,
 "homepage" : "http://toddmotto.com",
 "canonicalSource" : "http://toddmotto.com/killing-it-with-angular-directives-structure-and-mvvm/",
-"author" : "Simon Bailey",
+"author" : "Todd Motto",
 "license" : "All Rights Reserved"
 }
 -->
