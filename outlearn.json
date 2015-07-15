@@ -1,0 +1,25 @@
+{
+  "olpVersion" : "0.1",
+
+  "paths" : [
+    {
+      "name" : "all-modules",
+      "title" : "All Modules by Todd Motto",
+      "description" : "See in one place all the modules published by Todd Motto.",
+      "coverImage" : "https://raw.githubusercontent.com/outlearn-content/assets/master/space.jpg",
+      "privacy" : "public",
+      "pages" : [
+        {"module" : "angular-directives"}
+      ]
+    }
+  ],
+
+  "modules" : [
+    {
+      "olm" : "./modules/angular-directives.md"
+    }
+  ],
+
+  "assets" : [
+  ]
+}
