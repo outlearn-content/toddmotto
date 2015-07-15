@@ -5,7 +5,7 @@
 "title" : "Killing it with Angular Directives; Structure and MVVM",
 "description": "This post will cover my ideal way of creating/structuring and separating all concerns in the Directive, and how to use controller and link properties correctly.",
 "freshnessDate" : 2015-04-17,
-"homepage" : "http://toddmotto.com",
+"homepage" : "http://toddmotto.com/",
 "canonicalSource" : "http://toddmotto.com/killing-it-with-angular-directives-structure-and-mvvm/",
 "license" : "All Rights Reserved"
 }
