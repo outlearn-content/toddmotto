@@ -17,8 +17,6 @@
 
 A standardised approach for developing AngularJS applications in teams. This styleguide touches on concepts, syntax, conventions and is based on my experience [writing](http:////toddmotto.com) about, [talking](https://speakerdeck.com/toddmotto) about, and building Angular applications.
 
-<!-- @section -->
-
 #### Community
 [John Papa](//twitter.com/John_Papa) and I have discussed in-depth styling patterns for Angular and as such have both released separate styleguides. Thanks to those discussions, I've learned some great tips from John that have helped shape this guide. We've both created our own take on a styleguide. I urge you to [check his out](//github.com/johnpapa/angularjs-styleguide) to compare thoughts.
 
@@ -106,7 +104,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
     ```
 
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -274,7 +272,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
     *Why?* : Controllers should fetch Model data from Services, avoiding any Business logic. Controllers should act as a ViewModel and control the data flowing between the Model and the View presentational layer. Business logic in Controllers makes testing Services impossible.
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -315,7 +313,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
     *Why?* : Primitive values cannot update alone using the revealing module pattern
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -445,7 +443,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
       .directive('dragUpload', dragUpload);
     ```
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -481,7 +479,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - This enhances testing and reusability
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -565,7 +563,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - This keeps resolve dependencies inside the same file as the Controller and the router free from logic
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -611,7 +609,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
     });
     ```
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -637,7 +635,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
     *Why?* : `$scope.$apply` will call `$rootScope.$digest`, which causes the entire application `$$watchers` to dirty-check again. Using `$scope.$digest` will dirty check current and child scopes from the initiated `$scope`
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -695,7 +693,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
     }
     ```
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -727,7 +725,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
       .service('SomeService', SomeService);
     ```
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
@@ -762,7 +760,7 @@ A standardised approach for developing AngularJS applications in teams. This sty
       .controller('MainCtrl', MainCtrl);
     ```
 
-**[Back to top](#table-of-contents)**
+
 
 <!-- @section -->
 
