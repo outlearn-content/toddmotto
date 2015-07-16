@@ -764,20 +764,14 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
 <!-- @section -->
 
-## Angular docs
+# In Closing
+
+#### Angular docs
 For anything else, including API reference, check the [Angular documentation](//docs.angularjs.org/api).
 
-<!-- @section -->
+#### Contributing
 
-## Contributing
-
-Open an issue first to discuss potential changes/additions.
-
-<!-- @section -->
-
-## License
-
-<!-- @section -->
+[Open an issue](https://github.com/toddmotto/angularjs-styleguide) first to discuss potential changes/additions.
 
 #### (The MIT License)
 
