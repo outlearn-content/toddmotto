@@ -11,7 +11,8 @@
       "pages" : [
         {"module" : "angular-directives"},
         {"module" : "one-time-binding"},
-        {"module" : "better-way-to-scope"}
+        {"module" : "better-way-to-scope"},
+        {"module" : "styleguide"}
       ]
     }
   ],
@@ -19,7 +20,8 @@
   "modules" : [
     {"olm" : "./modules/angular-directives.md"},
     {"olm" : "./modules/one-time-binding.md"},
-    {"olm" : "./modules/better-way-to-scope.md"}
+    {"olm" : "./modules/better-way-to-scope.md"},
+    {"olm" : "./styleguide.md"}
   ],
 
   "assets" : [
