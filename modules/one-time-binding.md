@@ -7,7 +7,7 @@
 "freshnessDate" : 2014-12-12,
 "homepage" : "http://toddmotto.com/",
 "canonicalSource" : "http://toddmotto.com/angular-one-time-binding-syntax/",
-"license" : "All Rights Reserved"
+"license" : "MIT License"
 }
 -->
 
