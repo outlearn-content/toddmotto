@@ -7,7 +7,7 @@
 "freshnessDate" : 2015-06-01,
 "homepage" : "http://toddmotto.com/",
 "canonicalSource" : "https://github.com/toddmotto/angularjs-styleguide",
-"license" : "All Rights Reserved"
+"license" : "MIT"
 }
 -->
 
@@ -29,79 +29,79 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **Definitions**: Declare modules without a variable using the setter and getter syntax
 
-    ```javascript
-    // avoid
-    var app = angular.module('app', []);
-    app.controller();
-    app.factory();
+```javascript
+// avoid
+var app = angular.module('app', []);
+app.controller();
+app.factory();
 
-    // recommended
-    angular
-      .module('app', [])
-      .controller()
-      .factory();
-    ```
+// recommended
+angular
+  .module('app', [])
+  .controller()
+  .factory();
+```
 
   - Note: Using `angular.module('app', []);` sets a module, whereas `angular.module('app');` gets the module. Only set once and get for all other instances.
 
   - **Methods**: Pass functions into module methods rather than assign as a callback
 
-    ```javascript
-    // avoid
-    angular
-      .module('app', [])
-      .controller('MainCtrl', function MainCtrl () {
+```javascript
+// avoid
+angular
+  .module('app', [])
+  .controller('MainCtrl', function MainCtrl () {
 
-      })
-      .service('SomeService', function SomeService () {
+  })
+  .service('SomeService', function SomeService () {
 
-      });
+  });
 
-    // recommended
-    function MainCtrl () {
+// recommended
+function MainCtrl () {
 
-    }
-    function SomeService () {
+}
+function SomeService () {
 
-    }
-    angular
-      .module('app', [])
-      .controller('MainCtrl', MainCtrl)
-      .service('SomeService', SomeService);
-    ```
+}
+angular
+  .module('app', [])
+  .controller('MainCtrl', MainCtrl)
+  .service('SomeService', SomeService);
+```
 
   - This aids with readability and reduces the volume of code "wrapped" inside the Angular framework
 
   - **IIFE scoping**: To avoid polluting the global scope with our function declarations that get passed into Angular, ensure build tasks wrap the concatenated files inside an IIFE
 
-    ```javascript
-    (function () {
+```javascript
+(function () {
 
-      angular
-        .module('app', []);
+  angular
+    .module('app', []);
 
-      // MainCtrl.js
-      function MainCtrl () {
+  // MainCtrl.js
+  function MainCtrl () {
 
-      }
+  }
 
-      angular
-        .module('app')
-        .controller('MainCtrl', MainCtrl);
+  angular
+    .module('app')
+    .controller('MainCtrl', MainCtrl);
 
-      // SomeService.js
-      function SomeService () {
+  // SomeService.js
+  function SomeService () {
 
-      }
+  }
 
-      angular
-        .module('app')
-        .service('SomeService', SomeService);
+  angular
+    .module('app')
+    .service('SomeService', SomeService);
 
-      // ...
+  // ...
 
-    })();
-    ```
+})();
+```
 
 
 
@@ -112,163 +112,163 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **controllerAs syntax**: Controllers are classes, so use the `controllerAs` syntax at all times
 
-    ```html
-    <!-- avoid -->
-    <div ng-controller="MainCtrl">
-      {{ someObject }}
-    </div>
+```html
+<!-- avoid -->
+<div ng-controller="MainCtrl">
+  {{ someObject }}
+</div>
 
-    <!-- recommended -->
-    <div ng-controller="MainCtrl as vm">
-      {{ vm.someObject }}
-    </div>
-    ```
+<!-- recommended -->
+<div ng-controller="MainCtrl as vm">
+  {{ vm.someObject }}
+</div>
+```
 
   - In the DOM we get a variable per controller, which aids nested controller methods, avoiding any `$parent` calls
 
   - The `controllerAs` syntax uses `this` inside controllers, which gets bound to `$scope`
 
-    ```javascript
-    // avoid
-    function MainCtrl ($scope) {
-      $scope.someObject = {};
-      $scope.doSomething = function () {
+```javascript
+// avoid
+function MainCtrl ($scope) {
+  $scope.someObject = {};
+  $scope.doSomething = function () {
 
-      };
-    }
+  };
+}
 
-    // recommended
-    function MainCtrl () {
-      this.someObject = {};
-      this.doSomething = function () {
+// recommended
+function MainCtrl () {
+  this.someObject = {};
+  this.doSomething = function () {
 
-      };
-    }
-    ```
+  };
+}
+```
 
   - Only use `$scope` in `controllerAs` when necessary; for example, publishing and subscribing events using `$emit`, `$broadcast`, `$on` or `$watch`. Try to limit the use of these, however, and treat `$scope` as a special use case
 
   - **Inheritance**: Use prototypal inheritance when extending controller classes
 
-    ```javascript
-    function BaseCtrl () {
-      this.doSomething = function () {
+```javascript
+function BaseCtrl () {
+  this.doSomething = function () {
 
-      };
-    }
-    BaseCtrl.prototype.someObject = {};
-    BaseCtrl.prototype.sharedSomething = function () {
+  };
+}
+BaseCtrl.prototype.someObject = {};
+BaseCtrl.prototype.sharedSomething = function () {
 
-    };
+};
 
-    AnotherCtrl.prototype = Object.create(BaseCtrl.prototype);
+AnotherCtrl.prototype = Object.create(BaseCtrl.prototype);
 
-    function AnotherCtrl () {
-      this.anotherSomething = function () {
+function AnotherCtrl () {
+  this.anotherSomething = function () {
 
-      };
-    }
-    ```
+  };
+}
+```
 
   - Use `Object.create` with a polyfill for browser support
 
   - **controllerAs 'vm'**: Capture the `this` context of the Controller using `vm`, standing for `ViewModel`
 
-    ```javascript
-    // avoid
-    function MainCtrl () {
-      var doSomething = function () {
+```javascript
+// avoid
+function MainCtrl () {
+  var doSomething = function () {
 
-      };
-      this.doSomething = doSomething;
-    }
+  };
+  this.doSomething = doSomething;
+}
 
-    // recommended
-    function MainCtrl () {
-      var vm = this;
-      var doSomething = function () {
+// recommended
+function MainCtrl () {
+  var vm = this;
+  var doSomething = function () {
 
-      };
-      vm.doSomething = doSomething;
-    }
-    ```
+  };
+  vm.doSomething = doSomething;
+}
+```
 
     *Why?* : Function context changes the `this` value, use it to avoid `.bind()` calls and scoping issues
 
   - **ES6**: Avoid `var vm = this;` when using ES6
 
-    ```javascript
-    // avoid
-    function MainCtrl () {
-      let vm = this;
-      let doSomething = arg => {
-        console.log(vm);
-      };
+```javascript
+// avoid
+function MainCtrl () {
+  let vm = this;
+  let doSomething = arg => {
+    console.log(vm);
+  };
 
-      // exports
-      vm.doSomething = doSomething;
-    }
+  // exports
+  vm.doSomething = doSomething;
+}
 
-    // recommended
-    function MainCtrl () {
+// recommended
+function MainCtrl () {
 
-      let doSomething = arg => {
-        console.log(this);
-      };
+  let doSomething = arg => {
+    console.log(this);
+  };
 
-      // exports
-      this.doSomething = doSomething;
+  // exports
+  this.doSomething = doSomething;
 
-    }
-    ```
+}
+```
 
     *Why?* : Use ES6 arrow functions when necessary to access the `this` value lexically
 
   - **Presentational logic only (MVVM)**: Presentational logic only inside a controller, avoid Business logic (delegate to Services)
 
-    ```javascript
-    // avoid
-    function MainCtrl () {
+```javascript
+// avoid
+function MainCtrl () {
 
-      var vm = this;
+  var vm = this;
 
-      $http
-        .get('/users')
-        .success(function (response) {
-          vm.users = response;
-        });
+  $http
+    .get('/users')
+    .success(function (response) {
+      vm.users = response;
+    });
 
-      vm.removeUser = function (user, index) {
-        $http
-          .delete('/user/' + user.id)
-          .then(function (response) {
-            vm.users.splice(index, 1);
-          });
-      };
+  vm.removeUser = function (user, index) {
+    $http
+      .delete('/user/' + user.id)
+      .then(function (response) {
+        vm.users.splice(index, 1);
+      });
+  };
 
-    }
+}
 
-    // recommended
-    function MainCtrl (UserService) {
+// recommended
+function MainCtrl (UserService) {
 
-      var vm = this;
+  var vm = this;
 
-      UserService
-        .getUsers()
-        .then(function (response) {
-          vm.users = response;
-        });
+  UserService
+    .getUsers()
+    .then(function (response) {
+      vm.users = response;
+    });
 
-      vm.removeUser = function (user, index) {
-        UserService
-          .removeUser(user)
-          .then(function (response) {
-            vm.users.splice(index, 1);
-          });
-      };
+  vm.removeUser = function (user, index) {
+    UserService
+      .removeUser(user)
+      .then(function (response) {
+        vm.users.splice(index, 1);
+      });
+  };
 
-    }
-    ```
+}
+```
 
     *Why?* : Controllers should fetch Model data from Services, avoiding any Business logic. Controllers should act as a ViewModel and control the data flowing between the Model and the View presentational layer. Business logic in Controllers makes testing Services impossible.
 
@@ -282,34 +282,34 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   **Services**: act as a `constructor` function and are instantiated with the `new` keyword. Use `this` for public methods and variables
 
-    ```javascript
-    function SomeService () {
-      this.someMethod = function () {
+```javascript
+function SomeService () {
+  this.someMethod = function () {
 
-      };
-    }
-    angular
-      .module('app')
-      .service('SomeService', SomeService);
-    ```
+  };
+}
+angular
+  .module('app')
+  .service('SomeService', SomeService);
+```
 
   **Factory**: Business logic or provider modules, return an Object or closure
 
   - Always return a host Object instead of the revealing Module pattern due to the way Object references are bound and updated
 
-    ```javascript
-    function AnotherService () {
-      var AnotherService = {};
-      AnotherService.someValue = '';
-      AnotherService.someMethod = function () {
+```javascript
+function AnotherService () {
+  var AnotherService = {};
+  AnotherService.someValue = '';
+  AnotherService.someMethod = function () {
 
-      };
-      return AnotherService;
-    }
-    angular
-      .module('app')
-      .factory('AnotherService', AnotherService);
-    ```
+  };
+  return AnotherService;
+}
+angular
+  .module('app')
+  .factory('AnotherService', AnotherService);
+```
 
     *Why?* : Primitive values cannot update alone using the revealing module pattern
 
@@ -321,127 +321,127 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **Declaration restrictions**: Only use `custom element` and `custom attribute` methods for declaring your Directives (`{ restrict: 'EA' }`) depending on the Directive's role
 
-    ```html
-    <!-- avoid -->
+```html
+<!-- avoid -->
 
-    <!-- directive: my-directive -->
-    <div class="my-directive"></div>
+<!-- directive: my-directive -->
+<div class="my-directive"></div>
 
-    <!-- recommended -->
+<!-- recommended -->
 
-    <my-directive></my-directive>
-    <div my-directive></div>
-    ```
+<my-directive></my-directive>
+<div my-directive></div>
+```
 
   - Comment and class name declarations are confusing and should be avoided. Comments do not play nicely with older versions of IE. Using an attribute is the safest method for browser coverage.
 
   - **Templating**: Use `Array.join('')` for clean templating
 
-    ```javascript
-    // avoid
-    function someDirective () {
-      return {
-        template: '<div class="some-directive">' +
-          '<h1>My directive</h1>' +
-        '</div>'
-      };
-    }
+```javascript
+// avoid
+function someDirective () {
+  return {
+    template: '<div class="some-directive">' +
+      '<h1>My directive</h1>' +
+    '</div>'
+  };
+}
 
-    // recommended
-    function someDirective () {
-      return {
-        template: [
-          '<div class="some-directive">',
-            '<h1>My directive</h1>',
-          '</div>'
-        ].join('')
-      };
-    }
-    ```
+// recommended
+function someDirective () {
+  return {
+    template: [
+      '<div class="some-directive">',
+        '<h1>My directive</h1>',
+      '</div>'
+    ].join('')
+  };
+}
+```
 
     *Why?* : Improves readability as code can be indented properly, it also avoids the `+` operator which is less clean and can lead to errors if used incorrectly to split lines
 
   - **DOM manipulation**: Takes place only inside Directives, never a controller/service
 
-    ```javascript
-    // avoid
-    function UploadCtrl () {
-      $('.dragzone').on('dragend', function () {
+```javascript
+// avoid
+function UploadCtrl () {
+  $('.dragzone').on('dragend', function () {
+    // handle drop functionality
+  });
+}
+angular
+  .module('app')
+  .controller('UploadCtrl', UploadCtrl);
+
+// recommended
+function dragUpload () {
+  return {
+    restrict: 'EA',
+    link: function (scope, element, attrs) {
+      element.on('dragend', function () {
         // handle drop functionality
       });
     }
-    angular
-      .module('app')
-      .controller('UploadCtrl', UploadCtrl);
-
-    // recommended
-    function dragUpload () {
-      return {
-        restrict: 'EA',
-        link: function (scope, element, attrs) {
-          element.on('dragend', function () {
-            // handle drop functionality
-          });
-        }
-      };
-    }
-    angular
-      .module('app')
-      .directive('dragUpload', dragUpload);
-    ```
+  };
+}
+angular
+  .module('app')
+  .directive('dragUpload', dragUpload);
+```
 
   - **Naming conventions**: Never `ng-*` prefix custom directives, they might conflict future native directives
 
-    ```javascript
-    // avoid
-    // <div ng-upload></div>
-    function ngUpload () {
-      return {};
-    }
-    angular
-      .module('app')
-      .directive('ngUpload', ngUpload);
+```javascript
+// avoid
+// <div ng-upload></div>
+function ngUpload () {
+  return {};
+}
+angular
+  .module('app')
+  .directive('ngUpload', ngUpload);
 
-    // recommended
-    // <div drag-upload></div>
-    function dragUpload () {
-      return {};
-    }
-    angular
-      .module('app')
-      .directive('dragUpload', dragUpload);
-    ```
+// recommended
+// <div drag-upload></div>
+function dragUpload () {
+  return {};
+}
+angular
+  .module('app')
+  .directive('dragUpload', dragUpload);
+```
 
   - Directives and Filters are the _only_ providers that have the first letter as lowercase; this is due to strict naming conventions in Directives. Angular hyphenates `camelCase`, so `dragUpload` will become `<div drag-upload></div>` when used on an element.
 
   - **controllerAs**: Use the `controllerAs` syntax inside Directives as well
 
-    ```javascript
-    // avoid
-    function dragUpload () {
-      return {
-        controller: function ($scope) {
+```javascript
+// avoid
+function dragUpload () {
+  return {
+    controller: function ($scope) {
 
-        }
-      };
     }
-    angular
-      .module('app')
-      .directive('dragUpload', dragUpload);
+  };
+}
+angular
+  .module('app')
+  .directive('dragUpload', dragUpload);
 
-    // recommended
-    function dragUpload () {
-      return {
-        controllerAs: 'vm',
-        controller: function () {
+// recommended
+function dragUpload () {
+  return {
+    controllerAs: 'vm',
+    controller: function () {
 
-        }
-      };
     }
-    angular
-      .module('app')
-      .directive('dragUpload', dragUpload);
-    ```
+  };
+}
+angular
+  .module('app')
+  .directive('dragUpload', dragUpload);
+```
 
 
 
@@ -451,31 +451,31 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **Global filters**: Create global filters using `angular.filter()` only. Never use local filters inside Controllers/Services
 
-    ```javascript
-    // avoid
-    function SomeCtrl () {
-      this.startsWithLetterA = function (items) {
-        return items.filter(function (item) {
-          return /^a/i.test(item.name);
-        });
-      };
-    }
-    angular
-      .module('app')
-      .controller('SomeCtrl', SomeCtrl);
+```javascript
+// avoid
+function SomeCtrl () {
+  this.startsWithLetterA = function (items) {
+    return items.filter(function (item) {
+      return /^a/i.test(item.name);
+    });
+  };
+}
+angular
+  .module('app')
+  .controller('SomeCtrl', SomeCtrl);
 
-    // recommended
-    function startsWithLetterA () {
-      return function (items) {
-        return items.filter(function (item) {
-          return /^a/i.test(item.name);
-        });
-      };
-    }
-    angular
-      .module('app')
-      .filter('startsWithLetterA', startsWithLetterA);
-    ```
+// recommended
+function startsWithLetterA () {
+  return function (items) {
+    return items.filter(function (item) {
+      return /^a/i.test(item.name);
+    });
+  };
+}
+angular
+  .module('app')
+  .filter('startsWithLetterA', startsWithLetterA);
+```
 
   - This enhances testing and reusability
 
@@ -487,79 +487,79 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **Promises**: Resolve Controller dependencies in the `$routeProvider` (or `$stateProvider` for `ui-router`), not the Controller itself
 
-    ```javascript
-    // avoid
-    function MainCtrl (SomeService) {
-      var _this = this;
-      // unresolved
-      _this.something;
-      // resolved asynchronously
-      SomeService.doSomething().then(function (response) {
-        _this.something = response;
-      });
-    }
-    angular
-      .module('app')
-      .controller('MainCtrl', MainCtrl);
+```javascript
+// avoid
+function MainCtrl (SomeService) {
+  var _this = this;
+  // unresolved
+  _this.something;
+  // resolved asynchronously
+  SomeService.doSomething().then(function (response) {
+    _this.something = response;
+  });
+}
+angular
+  .module('app')
+  .controller('MainCtrl', MainCtrl);
 
-    // recommended
-    function config ($routeProvider) {
-      $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        resolve: {
-          // resolve here
-        }
-      });
+// recommended
+function config ($routeProvider) {
+  $routeProvider
+  .when('/', {
+    templateUrl: 'views/main.html',
+    resolve: {
+      // resolve here
     }
-    angular
-      .module('app')
-      .config(config);
-    ```
+  });
+}
+angular
+  .module('app')
+  .config(config);
+```
 
   - **Controller.resolve property**: Never bind logic to the router itself. Reference a `resolve` property for each Controller to couple the logic
 
-    ```javascript
-    // avoid
-    function MainCtrl (SomeService) {
-      this.something = SomeService.something;
-    }
+```javascript
+// avoid
+function MainCtrl (SomeService) {
+  this.something = SomeService.something;
+}
 
-    function config ($routeProvider) {
-      $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controllerAs: 'vm',
-        controller: 'MainCtrl'
-        resolve: {
-          doSomething: function () {
-            return SomeService.doSomething();
-          }
-        }
-      });
-    }
-
-    // recommended
-    function MainCtrl (SomeService) {
-      this.something = SomeService.something;
-    }
-
-    MainCtrl.resolve = {
-      doSomething: function (SomeService) {
+function config ($routeProvider) {
+  $routeProvider
+  .when('/', {
+    templateUrl: 'views/main.html',
+    controllerAs: 'vm',
+    controller: 'MainCtrl'
+    resolve: {
+      doSomething: function () {
         return SomeService.doSomething();
       }
-    };
-
-    function config ($routeProvider) {
-      $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controllerAs: 'vm',
-        controller: 'MainCtrl'
-        resolve: MainCtrl.resolve
-      });
     }
-    ```
+  });
+}
+
+// recommended
+function MainCtrl (SomeService) {
+  this.something = SomeService.something;
+}
+
+MainCtrl.resolve = {
+  doSomething: function (SomeService) {
+    return SomeService.doSomething();
+  }
+};
+
+function config ($routeProvider) {
+  $routeProvider
+  .when('/', {
+    templateUrl: 'views/main.html',
+    controllerAs: 'vm',
+    controller: 'MainCtrl'
+    resolve: MainCtrl.resolve
+  });
+}
+```
 
   - This keeps resolve dependencies inside the same file as the Controller and the router free from logic
 
@@ -571,43 +571,43 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **$scope**: Use the `$emit` and `$broadcast` methods to trigger events to direct relationship scopes only
 
-    ```javascript
-    // up the $scope
-    $scope.$emit('customEvent', data);
+```javascript
+// up the $scope
+$scope.$emit('customEvent', data);
 
-    // down the $scope
-    $scope.$broadcast('customEvent', data);
-    ```
+// down the $scope
+$scope.$broadcast('customEvent', data);
+```
 
   - **$rootScope**: Use only `$emit` as an application-wide event bus and remember to unbind listeners
 
-    ```javascript
-    // all $rootScope.$on listeners
-    $rootScope.$emit('customEvent', data);
-    ```
+```javascript
+// all $rootScope.$on listeners
+$rootScope.$emit('customEvent', data);
+```
 
   - Hint: Because the `$rootScope` is never destroyed, `$rootScope.$on` listeners aren't either, unlike `$scope.$on` listeners and will always persist, so they need destroying when the relevant `$scope` fires the `$destroy` event
 
-    ```javascript
-    // call the closure
-    var unbind = $rootScope.$on('customEvent'[, callback]);
-    $scope.$on('$destroy', unbind);
-    ```
+```javascript
+// call the closure
+var unbind = $rootScope.$on('customEvent'[, callback]);
+$scope.$on('$destroy', unbind);
+```
 
   - For multiple `$rootScope` listeners, use an Object literal and loop each one on the `$destroy` event to unbind all automatically
 
-    ```javascript
-    var unbind = [
-      $rootScope.$on('customEvent1'[, callback]),
-      $rootScope.$on('customEvent2'[, callback]),
-      $rootScope.$on('customEvent3'[, callback])
-    ];
-    $scope.$on('$destroy', function () {
-      unbind.forEach(function (fn) {
-        fn();
-      });
-    });
-    ```
+```javascript
+var unbind = [
+  $rootScope.$on('customEvent1'[, callback]),
+  $rootScope.$on('customEvent2'[, callback]),
+  $rootScope.$on('customEvent3'[, callback])
+];
+$scope.$on('$destroy', function () {
+  unbind.forEach(function (fn) {
+    fn();
+  });
+});
+```
 
 
 
@@ -617,21 +617,21 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **One-time binding syntax**: In newer versions of Angular (v1.3.0-beta.10+), use the one-time binding syntax `{{ ::value }}` where it makes sense
 
-    ```html
-    // avoid
-    <h1>{{ vm.title }}</h1>
+```html
+// avoid
+<h1>{{ vm.title }}</h1>
 
-    // recommended
-    <h1>{{ ::vm.title }}</h1>
-    ```
+// recommended
+<h1>{{ ::vm.title }}</h1>
+```
 
     *Why?* : Binding once removes the watcher from the scope's `$$watchers` array after the `undefined` variable becomes resolved, thus improving performance in each dirty-check
 
   - **Consider $scope.$digest**: Use `$scope.$digest` over `$scope.$apply` where it makes sense. Only child scopes will update
 
-    ```javascript
-    $scope.$digest();
-    ```
+```javascript
+$scope.$digest();
+```
 
     *Why?* : `$scope.$apply` will call `$rootScope.$digest`, which causes the entire application `$$watchers` to dirty-check again. Using `$scope.$digest` will dirty check current and child scopes from the initiated `$scope`
 
@@ -643,55 +643,55 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **$document and $window**: Use `$document` and `$window` at all times to aid testing and Angular references
 
-    ```javascript
-    // avoid
-    function dragUpload () {
-      return {
-        link: function ($scope, $element, $attrs) {
-          document.addEventListener('click', function () {
+```javascript
+// avoid
+function dragUpload () {
+  return {
+    link: function ($scope, $element, $attrs) {
+      document.addEventListener('click', function () {
 
-          });
-        }
-      };
+      });
     }
+  };
+}
 
-    // recommended
-    function dragUpload () {
-      return {
-        link: function ($scope, $element, $attrs, $document) {
-          $document.addEventListener('click', function () {
+// recommended
+function dragUpload () {
+  return {
+    link: function ($scope, $element, $attrs, $document) {
+      $document.addEventListener('click', function () {
 
-          });
-        }
-      };
+      });
     }
-    ```
+  };
+}
+```
 
   - **$timeout and $interval**: Use `$timeout` and `$interval` over their native counterparts to keep Angular's two-way data binding up to date
 
-    ```javascript
-    // avoid
-    function dragUpload () {
-      return {
-        link: function ($scope, $element, $attrs) {
-          setTimeout(function () {
-            //
-          }, 1000);
-        }
-      };
+```javascript
+// avoid
+function dragUpload () {
+  return {
+    link: function ($scope, $element, $attrs) {
+      setTimeout(function () {
+        //
+      }, 1000);
     }
+  };
+}
 
-    // recommended
-    function dragUpload ($timeout) {
-      return {
-        link: function ($scope, $element, $attrs) {
-          $timeout(function () {
-            //
-          }, 1000);
-        }
-      };
+// recommended
+function dragUpload ($timeout) {
+  return {
+    link: function ($scope, $element, $attrs) {
+      $timeout(function () {
+        //
+      }, 1000);
     }
-    ```
+  };
+}
+```
 
 
 
@@ -701,29 +701,29 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **jsDoc**: Use jsDoc syntax to document function names, description, params and returns
 
-    ```javascript
-    /**
-     * @name SomeService
-     * @desc Main application Controller
-     */
-    function SomeService (SomeService) {
+```javascript
+/**
+ * @name SomeService
+ * @desc Main application Controller
+ */
+function SomeService (SomeService) {
 
-      /**
-       * @name doSomething
-       * @desc Does something awesome
-       * @param {Number} x - First number to do something with
-       * @param {Number} y - Second number to do something with
-       * @returns {Number}
-       */
-      this.doSomething = function (x, y) {
-        return x * y;
-      };
+  /**
+   * @name doSomething
+   * @desc Does something awesome
+   * @param {Number} x - First number to do something with
+   * @param {Number} y - Second number to do something with
+   * @returns {Number}
+   */
+  this.doSomething = function (x, y) {
+    return x * y;
+  };
 
-    }
-    angular
-      .module('app')
-      .service('SomeService', SomeService);
-    ```
+}
+angular
+  .module('app')
+  .service('SomeService', SomeService);
+```
 
 
 
@@ -733,32 +733,32 @@ A standardised approach for developing AngularJS applications in teams. This sty
 
   - **ng-annotate**: Use [ng-annotate](//github.com/olov/ng-annotate) for Gulp as `ng-min` is deprecated, and comment functions that need automated dependency injection using `/** @ngInject */`
 
-    ```javascript
-    /**
-     * @ngInject
-     */
-    function MainCtrl (SomeService) {
-      this.doSomething = SomeService.doSomething;
-    }
-    angular
-      .module('app')
-      .controller('MainCtrl', MainCtrl);
-    ```
+```javascript
+/**
+ * @ngInject
+ */
+function MainCtrl (SomeService) {
+  this.doSomething = SomeService.doSomething;
+}
+angular
+  .module('app')
+  .controller('MainCtrl', MainCtrl);
+```
 
   - Which produces the following output with the `$inject` annotation
 
-    ```javascript
-    /**
-     * @ngInject
-     */
-    function MainCtrl (SomeService) {
-      this.doSomething = SomeService.doSomething;
-    }
-    MainCtrl.$inject = ['SomeService'];
-    angular
-      .module('app')
-      .controller('MainCtrl', MainCtrl);
-    ```
+```javascript
+/**
+ * @ngInject
+ */
+function MainCtrl (SomeService) {
+  this.doSomething = SomeService.doSomething;
+}
+MainCtrl.$inject = ['SomeService'];
+angular
+  .module('app')
+  .controller('MainCtrl', MainCtrl);
+```
 
 
 
